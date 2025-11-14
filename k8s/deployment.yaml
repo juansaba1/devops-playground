@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jsb-python-app
+  labels:
+    app: jsb-python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsb-python-app
+  template:
+    metadata:
+      labels:
+        app: jsb-python-app
+    spec:
+      containers:
+      - name: jsb-python-app
+        image: juansaez/jsb-python-app:v1
+        ports:
+        - containerPort: 5000

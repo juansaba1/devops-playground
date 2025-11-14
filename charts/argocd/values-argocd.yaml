@@ -1,0 +1,36 @@
+# We install HA mode without autoscaling 
+# (https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd#ha-mode-without-autoscaling)
+
+redis-ha:
+  enabled: false
+
+controller:
+  replicas: 1
+
+server:
+  replicas: 1
+
+repoServer:
+  replicas: 1
+
+applicationSet:
+  replicas: 1
+
+# We also configura ingress 
+# (https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd#ingress-configuration)
+
+global:
+  domain: argocd.test.com
+
+certificate:
+  enabled: true
+
+# We need to add nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" because
+# ArgoCD runs in https (TLS active)
+server:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    enabled: true
+    ingressClassName: nginx
+    tls: true
